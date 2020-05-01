@@ -1,0 +1,24 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - '*'
+    exclude:
+      - refs/tags/*
+
+jobs:
+  - template: ci/templates/build-component.job.yaml
+    parameters:
+      componentName: A
+      subPath: services/a
+      stepsTemplate: services/a/build.yaml
+  - template: ci/templates/build-component.job.yaml
+    parameters:
+      componentName: B
+      subPath: services/b
+      stepsTemplate: services/b/build.yaml
+  - template: ci/templates/build-component.job.yaml
+    parameters:
+      componentName: C
+      subPath: services/c
+      stepsTemplate: services/c/build.yaml
