@@ -3,19 +3,19 @@ parameters:
     subPath: ''
     stepsTemplate: ''
   
-  jobs:
-    - job: ${{ format('build_{0}', parameters.componentName) }}
-      displayName: ${{ format('Build {0}', parameters.componentName) }}
-      pool:
-        vmImage: 'ubuntu-16.04'
-      steps:
-        - checkout: self
-          persistCredentials: true
-        - template: check-update-status.step.yaml
-          parameters:
-            componentName: ${{ parameters.componentName }}
-            subPath: ${{ parameters.subPath }}
-        - template: ${{ format('{0}/{1}', variables.Build.SourcesDirectory, parameters.stepsTemplate) }}
-        - template: tag-build.step.yaml
-          parameters:
-            componentName: ${{ parameters.componentName }}
+jobs:
+  - job: ${{ format('build_{0}', parameters.componentName) }}
+    displayName: ${{ format('Build {0}', parameters.componentName) }}
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+      - checkout: self
+        persistCredentials: true
+      - template: check-update-status.step.yaml
+        parameters:
+          componentName: ${{ parameters.componentName }}
+          subPath: ${{ parameters.subPath }}
+      - template: ${{ format('{0}/{1}', variables.Build.SourcesDirectory, parameters.stepsTemplate) }}
+      - template: tag-build.step.yaml
+        parameters:
+          componentName: ${{ parameters.componentName }}
